@@ -1,6 +1,5 @@
 <template>
   <div class="bg-gray-50">
-    <!-- Navigation -->
     <nav class="fixed top-0 left-0 right-0 z-50 bg-white/95 backdrop-blur-sm shadow-lg">
       <div class="container mx-auto px-4 py-3">
         <div class="flex items-center justify-between">
@@ -15,16 +14,35 @@
             <a href="#about" class="text-gray-700 hover:text-brand-red transition-colors">Tentang</a>
             <a href="#contact" class="text-gray-700 hover:text-brand-red transition-colors">Kontak</a>
           </div>
-          <button @click="toggleMobileMenu" class="md:hidden text-gray-700">
+          <button @click="toggleMobileMenu" class="md:hidden text-gray-700 focus:outline-none">
             <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+              <path v-if="!mobileMenuOpen" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+              <path v-else stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
             </svg>
           </button>
         </div>
       </div>
     </nav>
 
-    <!-- Hero Section -->
+    <div
+      :class="{ 'translate-x-0': mobileMenuOpen, 'translate-x-full': !mobileMenuOpen }"
+      class="fixed inset-y-0 right-0 w-64 bg-white z-40 p-6 shadow-xl transform transition-transform duration-300 ease-out md:hidden"
+    >
+      <div class="flex justify-end mb-8">
+        <button @click="toggleMobileMenu" class="text-gray-700 focus:outline-none">
+          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+          </svg>
+        </button>
+      </div>
+      <nav class="flex flex-col space-y-4">
+        <a @click="closeMobileMenu" href="#home" class="text-gray-700 hover:text-brand-red transition-colors text-lg">Beranda</a>
+        <a @click="closeMobileMenu" href="#menu" class="text-gray-700 hover:text-brand-red transition-colors text-lg">Menu</a>
+        <a @click="closeMobileMenu" href="#about" class="text-gray-700 hover:text-brand-red transition-colors text-lg">Tentang</a>
+        <a @click="closeMobileMenu" href="#contact" class="text-gray-700 hover:text-brand-red transition-colors text-lg">Kontak</a>
+      </nav>
+    </div>
+
     <section id="home" class="min-h-screen gradient-bg hero-pattern flex items-center justify-center pt-20">
       <div class="container mx-auto px-4 text-center">
         <div class="max-w-4xl mx-auto">
@@ -46,7 +64,6 @@
       </div>
     </section>
 
-    <!-- Menu Section -->
     <section id="menu" class="py-20 bg-white">
       <div class="container mx-auto px-4">
         <div class="text-center mb-16">
@@ -64,7 +81,6 @@
       </div>
     </section>
 
-    <!-- About Section -->
     <section id="about" class="py-20 bg-gray-100">
       <div class="container mx-auto px-4">
         <div class="max-w-4xl mx-auto">
@@ -95,7 +111,6 @@
       </div>
     </section>
 
-    <!-- Testimonials Section -->
     <section class="py-20 bg-white">
       <div class="container mx-auto px-4">
         <div class="text-center mb-16">
@@ -139,7 +154,6 @@
       </div>
     </section>
 
-    <!-- Call to Action Section -->
     <section class="py-20 gradient-bg">
       <div class="container mx-auto px-4 text-center">
         <div class="max-w-3xl mx-auto">
@@ -161,7 +175,6 @@
       </div>
     </section>
 
-    <!-- Contact Section -->
     <section id="contact" class="py-20 bg-gray-100">
       <div class="container mx-auto px-4">
         <div class="max-w-4xl mx-auto">
@@ -181,7 +194,7 @@
                 </svg>
               </div>
               <h3 class="font-semibold text-gray-800 mb-2">Alamat</h3>
-              <p class="text-gray-600">Jl. MT. Haryono no.92, Dinoyo, Kec.Lowokwaru<br>Kota Malang</p>
+              <p class="text-gray-600">Jl. MT. Haryono no.92, Dinoyo, Kec.Lowokwaru, Kota Malang</p>
             </div>
 
             <div class="text-center bg-white p-8 rounded-2xl shadow-lg">
@@ -208,7 +221,6 @@
       </div>
     </section>
 
-    <!-- Footer -->
     <footer class="bg-gray-800 text-white py-12">
       <div class="container mx-auto px-4">
         <div class="grid md:grid-cols-4 gap-8">
@@ -219,37 +231,17 @@
             <p class="text-gray-400">Menghadirkan cita rasa mie bakar autentik dengan kualitas terbaik untuk kepuasan pelanggan.</p>
           </div>
           <div>
-            <h4 class="font-semibold mb-4">Menu</h4>
-            <ul class="space-y-2 text-gray-400">
-              <li><a href="#" class="hover:text-white transition-colors">Mie Bakar Original</a></li>
-              <li><a href="#" class="hover:text-white transition-colors">Mie Bakar Keju Mozarella</a></li>
-            </ul>
-          </div>
-
-          <div>
-            <h4 class="font-semibold mb-4">Tentang</h4>
-            <ul class="space-y-2 text-gray-400">
-              <li><a href="#" class="hover:text-white transition-colors">Sejarah Kami</a></li>
-              <li><a href="#" class="hover:text-white transition-colors">Testimoni</a></li>
-            </ul>
-          </div>
-
-          <div>
             <h4 class="font-semibold mb-4">Ikuti Kami</h4>
             <div class="flex space-x-4">
-              <!-- WhatsApp -->
               <a href="https://wa.me/6281325468281" target="_blank" class="w-10 h-10 bg-green-500 rounded-full flex items-center justify-center hover:bg-green-600 transition-colors group">
                 <img src="../images/whatsapp.png" alt="WhatsApp" class="w-6 h-6">
               </a>
-              <!-- Instagram -->
               <a href="https://www.instagram.com/miebakarmozaki?igsh=eHhiaWVmemVjdTYx" target="_blank" class="w-10 h-10 bg-gradient-to-r from-purple-500 to-pink-500 rounded-full flex items-center justify-center hover:from-purple-600 hover:to-pink-600 transition-colors group">
                 <img src="../images/instagram.png" alt="Instagram" class="w-6 h-6">
               </a>
-              <!-- TikTok -->
               <a href="https://www.tiktok.com/@mie.bakar.mozaki?_t=ZS-8wUHJE8ttOJ&_r=1" target="_blank" class="w-10 h-10 bg-black rounded-full flex items-center justify-center hover:bg-gray-800 transition-colors group">
                 <img src="../images/tiktok.png" alt="TikTok" class="w-6 h-6">
               </a>
-              <!-- Facebook -->
               <a href="https://www.facebook.com/share/1AxvuFsbyX/" target="_blank" class="w-10 h-10 bg-blue-600 rounded-full flex items-center justify-center hover:bg-blue-700 transition-colors group">
                 <img src="../images/facebook.png" alt="Facebook" class="w-6 h-6">
               </a>
@@ -270,9 +262,8 @@ export default {
   name: 'HomePage',
   data() {
     return {
-      mobileMenuOpen: false,
+      mobileMenuOpen: false, 
       currentYear: new Date().getFullYear(),
-      // Color variables for direct use in template
       brandRed: '#DC2626',
       brandYellow: '#FBBF24'
     }
@@ -281,7 +272,6 @@ export default {
     window.addEventListener('scroll', this.handleScroll);
     this.setupSmoothScroll();
     
-    // Add Tailwind color classes dynamically
     this.addCustomColorClasses();
   },
   beforeUnmount() {
@@ -290,6 +280,15 @@ export default {
   methods: {
     toggleMobileMenu() {
       this.mobileMenuOpen = !this.mobileMenuOpen;
+      if (this.mobileMenuOpen) {
+        document.body.classList.add('overflow-hidden');
+      } else {
+        document.body.classList.remove('overflow-hidden');
+      }
+    },
+    closeMobileMenu() {
+      this.mobileMenuOpen = false;
+      document.body.classList.remove('overflow-hidden'); 
     },
     handleScroll() {
       const navbar = document.querySelector('nav');
@@ -316,7 +315,6 @@ export default {
       });
     },
     addCustomColorClasses() {
-      // Ensure Tailwind utility classes are properly applied by adding them via JS if needed
       document.querySelectorAll('.text-brand-red').forEach(el => {
         el.style.color = this.brandRed;
       });
@@ -329,9 +327,26 @@ export default {
 </script>
 
 <style scoped>
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap');
+
 body {
   font-family: 'Poppins', sans-serif;
 }
+
+:root {
+  --brand-red: #DC2626;
+  --brand-yellow: #FBBF24;
+  --brand-red-dark: #B91C1C;
+  --brand-yellow-dark: #F59E0B;
+}
+
+.text-brand-red {
+  color: var(--brand-red);
+}
+.text-brand-yellow {
+  color: var(--brand-yellow);
+}
+
 .gradient-bg {
   background: linear-gradient(135deg, #DC2626 0%, #FBBF24 100%);
 }
@@ -339,6 +354,7 @@ body {
   background-image: radial-gradient(rgba(255,255,255,0.1) 1px, transparent 1px);
   background-size: 20px 20px;
 }
+
 .floating {
   animation: floating 3s ease-in-out infinite;
 }
@@ -352,24 +368,5 @@ body {
 @keyframes fadeIn {
   from { opacity: 0; transform: translateY(30px); }
   to { opacity: 1; transform: translateY(0); }
-}
-
-/* Custom Tailwind Colors */
-:root {
-  --brand-red: #DC2626;
-  --brand-yellow: #FBBF24;
-  --brand-red-dark: #B91C1C;
-  --brand-yellow-dark: #F59E0B;
-}
-
-/* Fix for text colors in hero section */
-.text-brand-red {
-  color: #DC2626 !important;
-}
-.text-brand-yellow {
-  color: #FBBF24 !important;
-}
-.text-white {
-  color: #FFFFFF !important;
 }
 </style>
