@@ -1,372 +1,448 @@
 <template>
-  <div class="bg-gray-50">
-    <nav class="fixed top-0 left-0 right-0 z-50 bg-white/95 backdrop-blur-sm shadow-lg">
-      <div class="container mx-auto px-4 py-3">
-        <div class="flex items-center justify-between">
-          <div class="flex items-center space-x-3">
-            <span class="text-xl font-bold text-gray-800">
-              <span class="text-brand-red">MIE BAKAR</span> <span class="text-brand-yellow">MOZAKI</span>
-            </span>
-          </div>
-          <div class="hidden md:flex space-x-6">
-            <a href="#home" class="text-gray-700 hover:text-brand-red transition-colors">Beranda</a>
-            <a href="#menu" class="text-gray-700 hover:text-brand-red transition-colors">Menu</a>
-            <a href="#about" class="text-gray-700 hover:text-brand-red transition-colors">Tentang</a>
-            <a href="#contact" class="text-gray-700 hover:text-brand-red transition-colors">Kontak</a>
-          </div>
-          <button @click="toggleMobileMenu" class="md:hidden text-gray-700 focus:outline-none">
-            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path v-if="!mobileMenuOpen" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
-              <path v-else stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
-            </svg>
-          </button>
-        </div>
-      </div>
-    </nav>
-
-    <div
-      :class="{ 'translate-x-0': mobileMenuOpen, 'translate-x-full': !mobileMenuOpen }"
-      class="fixed inset-y-0 right-0 w-64 bg-white z-40 p-6 shadow-xl transform transition-transform duration-300 ease-out md:hidden"
-    >
-      <div class="flex justify-end mb-8">
-        <button @click="toggleMobileMenu" class="text-gray-700 focus:outline-none">
-          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
-          </svg>
-        </button>
-      </div>
-      <nav class="flex flex-col space-y-4">
-        <a @click="closeMobileMenu" href="#home" class="text-gray-700 hover:text-brand-red transition-colors text-lg">Beranda</a>
-        <a @click="closeMobileMenu" href="#menu" class="text-gray-700 hover:text-brand-red transition-colors text-lg">Menu</a>
-        <a @click="closeMobileMenu" href="#about" class="text-gray-700 hover:text-brand-red transition-colors text-lg">Tentang</a>
-        <a @click="closeMobileMenu" href="#contact" class="text-gray-700 hover:text-brand-red transition-colors text-lg">Kontak</a>
-      </nav>
+  <div class="luxury-bg min-h-screen relative overflow-hidden">
+    <!-- Animated Background Elements -->
+    <div class="absolute inset-0 overflow-hidden pointer-events-none">
+      <div 
+        v-for="(particle, index) in particles" 
+        :key="index"
+        class="absolute w-2 h-2 bg-gold rounded-full opacity-30"
+        :style="{ 
+          left: particle.x + '%', 
+          top: particle.y + '%',
+          animationDelay: particle.delay + 's',
+          animationDuration: particle.duration + 's'
+        }"
+        :class="particle.animation"
+      ></div>
     </div>
 
-    <section id="home" class="min-h-screen gradient-bg hero-pattern flex items-center justify-center pt-20">
-      <div class="container mx-auto px-4 text-center">
-        <div class="max-w-4xl mx-auto">
-          <div class="floating mb-8">
-            <div class="mx-auto w-64 h-64 bg-white rounded-full shadow-2xl flex items-center justify-center">
-              <img src="../images/logo.jpg" alt="Logo Mie Bakar Mozaki" class="w-56 h-56 object-contain rounded-full">
+    <!-- Luxury Pattern Overlay -->
+    <div class="absolute inset-0 luxury-pattern opacity-10"></div>
+
+    <div class="relative z-10 flex flex-col items-center justify-center min-h-screen px-6 py-12">
+      <!-- Profile Section -->
+      <div class="text-center mb-12">
+        <!-- Profile Image with Luxury Border -->
+        <div class="profile-container mb-8" @mouseenter="startProfileAnimation" @mouseleave="stopProfileAnimation">
+          <div class="profile-ring" :class="{ 'animate-spin-slow': isProfileAnimated }">
+            <div class="profile-inner">
+              <img 
+                :src="profileImage" 
+                alt="Profile Picture" 
+                class="w-full h-full object-cover rounded-full transition-transform duration-500 hover:scale-110"
+                @error="handleImageError"
+              >
             </div>
           </div>
-
-          <h1 class="text-5xl md:text-7xl font-bold text-white mb-6 fade-in">
-            <span class="text-brand-red">Mie Bakar</span> <span class="text-brand-yellow">Mozaki</span>
-          </h1>
-          <p class="text-xl md:text-2xl text-black/90 mb-8 fade-in">
-            Cita Rasa Autentik yang Memukau Lidah Anda
-          </p>
-          <div class="flex flex-col sm:flex-row gap-4 justify-center fade-in">
-          </div>
+          <!-- Glow Effect -->
+          <div class="profile-glow"></div>
         </div>
+
+        <!-- Name and Bio -->
+        <h1 class="luxury-title text-5xl md:text-6xl font-bold mb-4 animate-fade-in">
+          {{ name }}
+        </h1>
+        <p class="text-gold-light text-lg md:text-xl mb-2 opacity-90 animate-fade-in-delay">
+          {{ bio }}
+        </p>
+        <p class="text-gray-400 text-sm md:text-base animate-fade-in-delay-2">
+          {{ description }}
+        </p>
       </div>
-    </section>
 
-    <section id="menu" class="py-20 bg-white">
-      <div class="container mx-auto px-4">
-        <div class="text-center mb-16">
-          <h2 class="text-4xl md:text-5xl font-bold text-gray-800 mb-4">
-            Menu <span class="text-brand-red">Spesial</span>
-          </h2>
-          <p class="text-gray-600 text-lg max-w-2xl mx-auto">
-            Nikmati kelezatan mie bakar dengan berbagai varian rasa yang menggugah selera
-          </p>
-        </div>
-
-        <div class="max-w-2xl mx-auto rounded-lg shadow-xl overflow-hidden">
-          <img src="../images/menu.png" alt="Daftar Menu Mie Bakar Mozaki" class="w-full h-auto object-cover">
-        </div>
-      </div>
-    </section>
-
-    <section id="about" class="py-20 bg-gray-100">
-      <div class="container mx-auto px-4">
-        <div class="max-w-4xl mx-auto">
-          <div class="grid md:grid-cols-1 gap-12 items-center">
-            <div>
-              <h2 class="text-4xl font-bold text-gray-800 mb-6">
-                Tentang <span class="text-brand-red">Mozaki</span>
-              </h2>
-              <p class="text-gray-600 mb-6 leading-relaxed">
-                Mie Bakar Mozaki hadir dengan konsep kuliner yang unik dan inovatif. Kami menghadirkan cita rasa mie bakar yang otentik dengan bumbu rahasia yang telah diracik secara khusus.
-              </p>
-              <p class="text-gray-600 mb-6 leading-relaxed">
-                Setiap porsi mie bakar kami dibuat dengan penuh cinta dan dedikasi untuk memberikan pengalaman kuliner yang tak terlupakan bagi setiap pelanggan.
-              </p>
-              <div class="flex space-x-6">
-                <div class="text-center">
-                  <div class="text-3xl font-bold text-brand-red">1000+</div>
-                  <div class="text-gray-600">Pelanggan Puas</div>
-                </div>
-                <div class="text-center">
-                  <div class="text-3xl font-bold text-brand-red">2+</div>
-                  <div class="text-gray-600">Tahun Pengalaman</div>
+      <!-- Links Section -->
+      <div class="w-full max-w-md space-y-6">
+        <div 
+          v-for="(link, index) in links" 
+          :key="index"
+          class="link-card group cursor-pointer transform transition-all duration-500 hover:scale-105"
+          :style="{ animationDelay: (index * 0.1) + 's' }"
+          @click="openLink(link.url)"
+          @mouseenter="playHoverSound"
+        >
+          <div class="link-inner p-6 rounded-2xl relative overflow-hidden">
+            <!-- Shine Effect -->
+            <div class="shine-effect"></div>
+            
+            <!-- Content -->
+            <div class="relative z-10 flex items-center space-x-4">
+              <!-- Icon -->
+              <div class="link-icon-wrapper">
+                <div 
+                  class="w-14 h-14 rounded-xl flex items-center justify-center transition-all duration-300 group-hover:scale-110 group-hover:rotate-6"
+                  :style="{ background: link.iconBg }"
+                >
+                  <i :class="link.icon" class="text-2xl text-white"></i>
                 </div>
               </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
 
-    <section class="py-20 bg-white">
-      <div class="container mx-auto px-4">
-        <div class="text-center mb-16">
-          <h2 class="text-4xl font-bold text-gray-800 mb-4">
-            Kata <span class="text-brand-red">Mereka</span>
-          </h2>
-          <p class="text-gray-600 text-lg">Testimoni dari pelanggan setia kami</p>
-        </div>
-
-        <div class="grid md:grid-cols-3 gap-8 max-w-6xl mx-auto">
-          <div class="bg-gray-50 p-6 rounded-2xl">
-            <div class="flex items-center mb-4">
-              <div class="flex text-brand-yellow">
-                ★★★★★
+              <!-- Text Content -->
+              <div class="flex-1 text-left">
+                <h3 class="text-white font-semibold text-lg mb-1 group-hover:text-gold transition-colors">
+                  {{ link.title }}
+                </h3>
+                <p class="text-gray-400 text-sm group-hover:text-gray-300 transition-colors">
+                  {{ link.description }}
+                </p>
               </div>
-            </div>
-            <p class="text-gray-600 mb-4 italic">"Mie bakar terenak yang pernah saya coba! Bumbunya meresap sempurna dan porsinya sangat mengenyangkan."</p>
-            <div class="font-semibold text-gray-800">- Sarah M.</div>
-          </div>
 
-          <div class="bg-gray-50 p-6 rounded-2xl">
-            <div class="flex items-center mb-4">
-              <div class="flex text-brand-yellow">
-                ★★★★★
-              </div>
-            </div>
-            <p class="text-gray-600 mb-4 italic">"Pelayanan ramah dan makanan selalu fresh. Mozaki sudah jadi langganan keluarga kami!"</p>
-            <div class="font-semibold text-gray-800">- Yoga M.</div>
-          </div>
-
-          <div class="bg-gray-50 p-6 rounded-2xl">
-            <div class="flex items-center mb-4">
-              <div class="flex text-brand-yellow">
-                ★★★★★
-              </div>
-            </div>
-            <p class="text-gray-600 mb-4 italic">"Varian pedas-nya juara! Cocok banget buat yang suka tantangan rasa pedas."</p>
-            <div class="font-semibold text-gray-800">- Rina A.</div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <section class="py-20 gradient-bg">
-      <div class="container mx-auto px-4 text-center">
-        <div class="max-w-3xl mx-auto">
-          <h2 class="text-4xl md:text-5xl font-bold text-white mb-6">
-            Siap Merasakan Kelezatannya?
-          </h2>
-          <p class="text-xl text-white/90 mb-8">
-            Jangan tunggu lagi! Pesan sekarang dan nikmati pengalaman kuliner yang tak terlupakan
-          </p>
-          <div class="flex flex-col sm:flex-row gap-4 justify-center">
-            <a href="https://wa.me/6281325468281" target="_blank" class="bg-white text-brand-red px-8 py-4 rounded-full font-semibold text-lg hover:shadow-lg transform hover:scale-105 transition-all duration-300">
-              Pesan Via WhatsApp
-            </a>
-            <a href="#contact" class="border-2 border-white text-white px-8 py-4 rounded-full font-semibold text-lg hover:bg-white hover:text-brand-red transition-all duration-300">
-              Hubungi Kami
-            </a>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <section id="contact" class="py-20 bg-gray-100">
-      <div class="container mx-auto px-4">
-        <div class="max-w-4xl mx-auto">
-          <div class="text-center mb-16">
-            <h2 class="text-4xl font-bold text-gray-800 mb-4">
-              Hubungi <span class="text-brand-red">Kami</span>
-            </h2>
-            <p class="text-gray-600 text-lg">Kami siap melayani Anda dengan sepenuh hati</p>
-          </div>
-
-          <div class="grid md:grid-cols-3 gap-8">
-            <div class="text-center bg-white p-8 rounded-2xl shadow-lg">
-              <div class="w-16 h-16 bg-brand-red rounded-full flex items-center justify-center mx-auto mb-4">
-                <svg class="w-8 h-8 text-black" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path>
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path>
+              <!-- Arrow -->
+              <div class="link-arrow">
+                <svg class="w-6 h-6 text-gold transform group-hover:translate-x-2 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
                 </svg>
               </div>
-              <h3 class="font-semibold text-gray-800 mb-2">Alamat</h3>
-              <p class="text-gray-600">Jl. MT. Haryono no.92, Dinoyo, Kec.Lowokwaru, Kota Malang</p>
             </div>
 
-            <div class="text-center bg-white p-8 rounded-2xl shadow-lg">
-              <div class="w-16 h-16 bg-brand-yellow rounded-full flex items-center justify-center mx-auto mb-4">
-                <svg class="w-8 h-8 text-black" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"></path>
-                </svg>
-              </div>
-              <h3 class="font-semibold text-gray-800 mb-2">Telepon</h3>
-              <p class="text-gray-600">0822-3262-5849</p>
-            </div>
-
-            <div class="text-center bg-white p-8 rounded-2xl shadow-lg">
-              <div class="w-16 h-16 bg-brand-red rounded-full flex items-center justify-center mx-auto mb-4">
-                <svg class="w-8 h-8 text-black" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
-                </svg>
-              </div>
-              <h3 class="font-semibold text-gray-800 mb-2">Jam Buka</h3>
-              <p class="text-gray-600">Senin - Minggu 10:00 - 20:00 <br> Jum'at Tutup</p>
-            </div>
+            <!-- Hover Gradient -->
+            <div class="hover-gradient"></div>
           </div>
         </div>
       </div>
-    </section>
 
-    <footer class="bg-gray-800 text-white py-12">
-      <div class="container mx-auto px-4">
-        <div class="grid md:grid-cols-4 gap-8">
-          <div>
-            <div class="flex items-center space-x-3 mb-4">
-              <span class="text-xl font-bold">Mie Bakar Mozaki</span>
-            </div>
-            <p class="text-gray-400">Menghadirkan cita rasa mie bakar autentik dengan kualitas terbaik untuk kepuasan pelanggan.</p>
-          </div>
-          <div>
-            <h4 class="font-semibold mb-4">Ikuti Kami</h4>
-            <div class="flex space-x-4">
-              <a href="https://wa.me/6281325468281" target="_blank" class="w-10 h-10 bg-green-500 rounded-full flex items-center justify-center hover:bg-green-600 transition-colors group">
-                <img src="../images/whatsapp.png" alt="WhatsApp" class="w-6 h-6">
-              </a>
-              <a href="https://www.instagram.com/miebakarmozaki?igsh=eHhiaWVmemVjdTYx" target="_blank" class="w-10 h-10 bg-gradient-to-r from-purple-500 to-pink-500 rounded-full flex items-center justify-center hover:from-purple-600 hover:to-pink-600 transition-colors group">
-                <img src="../images/instagram.png" alt="Instagram" class="w-6 h-6">
-              </a>
-              <a href="https://www.tiktok.com/@mie.bakar.mozaki?_t=ZS-8wUHJE8ttOJ&_r=1" target="_blank" class="w-10 h-10 bg-black rounded-full flex items-center justify-center hover:bg-gray-800 transition-colors group">
-                <img src="../images/tiktok.png" alt="TikTok" class="w-6 h-6">
-              </a>
-              <a href="https://www.facebook.com/share/1AxvuFsbyX/" target="_blank" class="w-10 h-10 bg-blue-600 rounded-full flex items-center justify-center hover:bg-blue-700 transition-colors group">
-                <img src="../images/facebook.png" alt="Facebook" class="w-6 h-6">
-              </a>
-            </div>
-          </div>
+      <!-- Footer Info -->
+      <div class="text-center mt-12 space-y-2 animate-fade-in-delay-3">
+        <div class="text-gold font-medium">
+          ✨ {{ footerText }} ✨
         </div>
-
-        <div class="border-t border-gray-700 mt-8 pt-8 text-center text-gray-400">
-          &copy; {{ currentYear }} Mie Bakar Mozaki. Hak Cipta Dilindungi.
+        <div class="text-gray-500 text-sm">
+          © {{ currentYear }} {{ name }}. All rights reserved.
         </div>
       </div>
-    </footer>
+    </div>
+
+    <!-- Click Ripple Effect -->
+    <div 
+      v-if="ripple.show" 
+      class="ripple-effect"
+      :style="{ left: ripple.x + 'px', top: ripple.y + 'px' }"
+    ></div>
   </div>
 </template>
 
 <script>
 export default {
-  name: 'HomePage',
+  name: 'LuxuryLinktree',
   data() {
     return {
-      mobileMenuOpen: false, 
+      name: 'Your Name',
+      bio: '🚀 Digital Creator & Entrepreneur',
+      description: 'Connecting you to all my digital spaces',
+      footerText: 'Thank you for visiting',
+      profileImage: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=400&h=400&fit=crop&crop=face',
+      isProfileAnimated: false,
       currentYear: new Date().getFullYear(),
-      brandRed: '#DC2626',
-      brandYellow: '#FBBF24'
+      
+      // Links Data
+      links: [
+        {
+          title: 'WhatsApp Group',
+          description: 'Join our exclusive community',
+          url: 'https://chat.whatsapp.com/your-group-link',
+          icon: 'fab fa-whatsapp',
+          iconBg: 'linear-gradient(135deg, #25D366, #128C7E)'
+        },
+        {
+          title: 'Telegram Channel',
+          description: 'Get instant updates',
+          url: 'https://t.me/your-channel',
+          icon: 'fab fa-telegram-plane',
+          iconBg: 'linear-gradient(135deg, #0088cc, #005580)'
+        },
+        {
+          title: 'Instagram',
+          description: 'Follow my daily stories',
+          url: 'https://instagram.com/username',
+          icon: 'fab fa-instagram',
+          iconBg: 'linear-gradient(135deg, #E4405F, #833AB4, #F77737)'
+        },
+        {
+          title: 'YouTube Channel',
+          description: 'Subscribe for exclusive content',
+          url: 'https://youtube.com/channel',
+          icon: 'fab fa-youtube',
+          iconBg: 'linear-gradient(135deg, #FF0000, #CC0000)'
+        },
+        {
+          title: 'Discord Server',
+          description: 'Chat with the community',
+          url: 'https://discord.gg/your-server',
+          icon: 'fab fa-discord',
+          iconBg: 'linear-gradient(135deg, #7289DA, #5865F2)'
+        },
+        {
+          title: 'Website Portfolio',
+          description: 'View my latest projects',
+          url: 'https://your-website.com',
+          icon: 'fas fa-globe',
+          iconBg: 'linear-gradient(135deg, #FFD700, #FFA500)'
+        }
+      ],
+
+      // Animation particles
+      particles: [],
+      
+      // Ripple effect
+      ripple: {
+        show: false,
+        x: 0,
+        y: 0
+      }
     }
   },
+  
   mounted() {
-    window.addEventListener('scroll', this.handleScroll);
-    this.setupSmoothScroll();
-    
-    this.addCustomColorClasses();
+    this.generateParticles();
+    this.loadFontAwesome();
+    document.addEventListener('click', this.createRipple);
   },
+  
   beforeUnmount() {
-    window.removeEventListener('scroll', this.handleScroll);
+    document.removeEventListener('click', this.createRipple);
   },
+  
   methods: {
-    toggleMobileMenu() {
-      this.mobileMenuOpen = !this.mobileMenuOpen;
-      if (this.mobileMenuOpen) {
-        document.body.classList.add('overflow-hidden');
-      } else {
-        document.body.classList.remove('overflow-hidden');
-      }
-    },
-    closeMobileMenu() {
-      this.mobileMenuOpen = false;
-      document.body.classList.remove('overflow-hidden'); 
-    },
-    handleScroll() {
-      const navbar = document.querySelector('nav');
-      if (window.scrollY > 100) {
-        navbar.classList.add('bg-white');
-        navbar.classList.remove('bg-white/95');
-      } else {
-        navbar.classList.add('bg-white/95');
-        navbar.classList.remove('bg-white');
-      }
-    },
-    setupSmoothScroll() {
-      document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-        anchor.addEventListener('click', (e) => {
-          e.preventDefault();
-          const target = document.querySelector(anchor.getAttribute('href'));
-          if (target) {
-            target.scrollIntoView({
-              behavior: 'smooth',
-              block: 'start'
-            });
-          }
+    generateParticles() {
+      for (let i = 0; i < 20; i++) {
+        this.particles.push({
+          x: Math.random() * 100,
+          y: Math.random() * 100,
+          delay: Math.random() * 5,
+          duration: 3 + Math.random() * 4,
+          animation: Math.random() > 0.5 ? 'animate-pulse' : 'animate-ping'
         });
-      });
+      }
     },
-    addCustomColorClasses() {
-      document.querySelectorAll('.text-brand-red').forEach(el => {
-        el.style.color = this.brandRed;
-      });
-      document.querySelectorAll('.text-brand-yellow').forEach(el => {
-        el.style.color = this.brandYellow;
-      });
+    
+    loadFontAwesome() {
+      if (!document.querySelector('link[href*="font-awesome"]')) {
+        const link = document.createElement('link');
+        link.rel = 'stylesheet';
+        link.href = 'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css';
+        document.head.appendChild(link);
+      }
+    },
+    
+    startProfileAnimation() {
+      this.isProfileAnimated = true;
+    },
+    
+    stopProfileAnimation() {
+      this.isProfileAnimated = false;
+    },
+    
+    openLink(url) {
+      window.open(url, '_blank');
+    },
+    
+    playHoverSound() {
+      // Optional: Add hover sound effect
+      // You can implement audio feedback here
+    },
+    
+    handleImageError() {
+      this.profileImage = 'https://via.placeholder.com/400x400/FFD700/000000?text=Profile';
+    },
+    
+    createRipple(event) {
+      this.ripple = {
+        show: true,
+        x: event.clientX - 25,
+        y: event.clientY - 25
+      };
+      
+      setTimeout(() => {
+        this.ripple.show = false;
+      }, 600);
     }
   }
 }
 </script>
 
 <style scoped>
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap');
-
-body {
-  font-family: 'Poppins', sans-serif;
+.luxury-bg {
+  background: 
+    radial-gradient(circle at 20% 80%, rgba(255, 215, 0, 0.15) 0%, transparent 50%),
+    radial-gradient(circle at 80% 20%, rgba(255, 215, 0, 0.1) 0%, transparent 50%),
+    linear-gradient(135deg, #000000 0%, #1a1a1a 50%, #000000 100%);
 }
 
-:root {
-  --brand-red: #DC2626;
-  --brand-yellow: #FBBF24;
-  --brand-red-dark: #B91C1C;
-  --brand-yellow-dark: #F59E0B;
+.luxury-pattern {
+  background-image: 
+    radial-gradient(circle at 2px 2px, rgba(255, 215, 0, 0.3) 1px, transparent 0);
+  background-size: 50px 50px;
 }
 
-.text-brand-red {
-  color: var(--brand-red);
-}
-.text-brand-yellow {
-  color: var(--brand-yellow);
-}
-
-.gradient-bg {
-  background: linear-gradient(135deg, #DC2626 0%, #FBBF24 100%);
-}
-.hero-pattern {
-  background-image: radial-gradient(rgba(255,255,255,0.1) 1px, transparent 1px);
-  background-size: 20px 20px;
+.profile-container {
+  position: relative;
+  width: 200px;
+  height: 200px;
+  margin: 0 auto;
 }
 
-.floating {
-  animation: floating 3s ease-in-out infinite;
+.profile-ring {
+  position: absolute;
+  inset: -6px;
+  background: conic-gradient(from 0deg, #FFD700, #FFA500, #FFD700, #B8860B, #FFD700);
+  border-radius: 50%;
+  padding: 6px;
+  transition: all 0.3s ease;
 }
-@keyframes floating {
-  0%, 100% { transform: translateY(0px); }
-  50% { transform: translateY(-10px); }
+
+.profile-inner {
+  width: 100%;
+  height: 100%;
+  background: #000;
+  border-radius: 50%;
+  overflow: hidden;
+  position: relative;
+  z-index: 2;
 }
-.fade-in {
-  animation: fadeIn 1s ease-in-out;
+
+.profile-glow {
+  position: absolute;
+  inset: -20px;
+  background: radial-gradient(circle, rgba(255, 215, 0, 0.4) 0%, transparent 70%);
+  border-radius: 50%;
+  z-index: 1;
+  animation: pulse-glow 3s ease-in-out infinite alternate;
 }
+
+.luxury-title {
+  background: linear-gradient(135deg, #FFD700, #FFA500, #FFD700);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  text-shadow: 0 0 30px rgba(255, 215, 0, 0.5);
+}
+
+.link-card {
+  animation: slideInUp 0.8s ease-out forwards;
+  opacity: 0;
+  transform: translateY(30px);
+}
+
+.link-inner {
+  background: linear-gradient(135deg, 
+    rgba(255, 215, 0, 0.1) 0%, 
+    rgba(26, 26, 26, 0.9) 30%, 
+    rgba(0, 0, 0, 0.95) 100%);
+  border: 2px solid transparent;
+  background-clip: padding-box;
+  backdrop-filter: blur(20px);
+  position: relative;
+  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.link-card:hover .link-inner {
+  border-color: rgba(255, 215, 0, 0.5);
+  box-shadow: 
+    0 20px 40px rgba(255, 215, 0, 0.2),
+    inset 0 1px 0 rgba(255, 215, 0, 0.1);
+  transform: translateY(-5px);
+}
+
+.shine-effect {
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, 
+    transparent, 
+    rgba(255, 215, 0, 0.2), 
+    transparent);
+  transition: left 0.6s;
+}
+
+.link-card:hover .shine-effect {
+  left: 100%;
+}
+
+.hover-gradient {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, 
+    rgba(255, 215, 0, 0.05), 
+    transparent);
+  opacity: 0;
+  transition: opacity 0.3s;
+  border-radius: inherit;
+}
+
+.link-card:hover .hover-gradient {
+  opacity: 1;
+}
+
+.text-gold {
+  color: #FFD700;
+}
+
+.text-gold-light {
+  color: #FFF8DC;
+}
+
+.animate-spin-slow {
+  animation: spin 8s linear infinite;
+}
+
+.animate-fade-in {
+  animation: fadeIn 1s ease-out;
+}
+
+.animate-fade-in-delay {
+  animation: fadeIn 1s ease-out 0.2s both;
+}
+
+.animate-fade-in-delay-2 {
+  animation: fadeIn 1s ease-out 0.4s both;
+}
+
+.animate-fade-in-delay-3 {
+  animation: fadeIn 1s ease-out 0.6s both;
+}
+
+.ripple-effect {
+  position: fixed;
+  width: 50px;
+  height: 50px;
+  background: radial-gradient(circle, rgba(255, 215, 0, 0.6) 0%, transparent 70%);
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 9999;
+  animation: ripple 0.6s ease-out;
+}
+
+@keyframes pulse-glow {
+  0% { opacity: 0.5; transform: scale(1); }
+  100% { opacity: 0.8; transform: scale(1.1); }
+}
+
+@keyframes slideInUp {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
 @keyframes fadeIn {
-  from { opacity: 0; transform: translateY(30px); }
+  from { opacity: 0; transform: translateY(20px); }
   to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes ripple {
+  0% {
+    transform: scale(0);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(4);
+    opacity: 0;
+  }
+}
+
+@keyframes spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
 }
 </style>

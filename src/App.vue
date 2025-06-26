@@ -1,5 +1,5 @@
 <template>
-  <Home msg="Mie Bakar Mozaki" />
+  <Home msg="Web Links" />
 </template>
 
 <script setup>
