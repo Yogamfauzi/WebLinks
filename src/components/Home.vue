@@ -121,6 +121,8 @@
 </template>
 
 <script>
+import profileImage from '../images/logopcc.jpg'; // pastikan path ini benar
+
 export default {
   name: 'LuxuryLinktree',
   data() {
@@ -129,11 +131,10 @@ export default {
       bio: '🚀 Digital Creator & Entrepreneur',
       description: 'Connecting you to all my digital spaces',
       footerText: 'Thank you for visiting',
-      profileImage: require('./images/logopcc.jpg'),
+      profileImage, // sudah pakai import, bukan require
       isProfileAnimated: false,
       currentYear: new Date().getFullYear(),
-      
-      // Links Data
+
       links: [
         {
           title: 'Grub WhatsApp',
@@ -158,28 +159,25 @@ export default {
         }
       ],
 
-      // Animation particles
       particles: [],
-      
-      // Ripple effect
       ripple: {
         show: false,
         x: 0,
         y: 0
       }
-    }
+    };
   },
-  
+
   mounted() {
     this.generateParticles();
     this.loadFontAwesome();
     document.addEventListener('click', this.createRipple);
   },
-  
+
   beforeUnmount() {
     document.removeEventListener('click', this.createRipple);
   },
-  
+
   methods: {
     generateParticles() {
       for (let i = 0; i < 20; i++) {
@@ -192,7 +190,6 @@ export default {
         });
       }
     },
-    
     loadFontAwesome() {
       if (!document.querySelector('link[href*="font-awesome"]')) {
         const link = document.createElement('link');
@@ -201,41 +198,33 @@ export default {
         document.head.appendChild(link);
       }
     },
-    
     startProfileAnimation() {
       this.isProfileAnimated = true;
     },
-    
     stopProfileAnimation() {
       this.isProfileAnimated = false;
     },
-    
     openLink(url) {
       window.open(url, '_blank');
     },
-    
     playHoverSound() {
-      // Optional: Add hover sound effect
-      // You can implement audio feedback here
+      // Optional
     },
-    
     handleImageError() {
       this.profileImage = 'https://via.placeholder.com/400x400/FFD700/000000?text=Profile';
     },
-    
     createRipple(event) {
       this.ripple = {
         show: true,
         x: event.clientX - 25,
         y: event.clientY - 25
       };
-      
       setTimeout(() => {
         this.ripple.show = false;
       }, 600);
     }
   }
-}
+};
 </script>
 
 <style scoped>
