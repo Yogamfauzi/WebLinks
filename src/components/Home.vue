@@ -40,13 +40,13 @@
 
         <!-- Name and Bio -->
         <h1 class="luxury-title text-5xl md:text-6xl font-bold mb-4 animate-fade-in">
-          {{ name }}
+          Probolinggo Crypto Community
         </h1>
         <p class="text-gold-light text-lg md:text-xl mb-2 opacity-90 animate-fade-in-delay">
-          {{ bio }}
+          Hallo Trader Muda
         </p>
         <p class="text-gray-400 text-sm md:text-base animate-fade-in-delay-2">
-          {{ description }}
+          Silahkan join untuk mendapatkan informasi lebih lanjut dari kami
         </p>
       </div>
 
@@ -106,7 +106,7 @@
           ✨ {{ footerText }} ✨
         </div>
         <div class="text-gray-500 text-sm">
-          © {{ currentYear }} {{ name }}. All rights reserved.
+          © {{ currentYear }} @yogamfauziii. All rights reserved.
         </div>
       </div>
     </div>
@@ -129,53 +129,32 @@ export default {
       bio: '🚀 Digital Creator & Entrepreneur',
       description: 'Connecting you to all my digital spaces',
       footerText: 'Thank you for visiting',
-      profileImage: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=400&h=400&fit=crop&crop=face',
+      profileImage: require('./images/logopcc.jpg'),
       isProfileAnimated: false,
       currentYear: new Date().getFullYear(),
       
       // Links Data
       links: [
         {
-          title: 'WhatsApp Group',
+          title: 'Grub WhatsApp',
           description: 'Join our exclusive community',
-          url: 'https://chat.whatsapp.com/your-group-link',
+          url: 'https://chat.whatsapp.com/GqoopaasyEIH5gBoNplodt',
           icon: 'fab fa-whatsapp',
           iconBg: 'linear-gradient(135deg, #25D366, #128C7E)'
         },
         {
-          title: 'Telegram Channel',
-          description: 'Get instant updates',
-          url: 'https://t.me/your-channel',
-          icon: 'fab fa-telegram-plane',
-          iconBg: 'linear-gradient(135deg, #0088cc, #005580)'
+          title: 'Saluran WhatsApp',
+          description: 'Join our exclusive community',
+          url: 'https://whatsapp.com/channel/0029VbAyjeg1NCrVMJo06S3z',
+          icon: 'fab fa-whatsapp',
+          iconBg: 'linear-gradient(135deg, #25D366, #128C7E)'
         },
         {
           title: 'Instagram',
-          description: 'Follow my daily stories',
-          url: 'https://instagram.com/username',
+          description: 'Follow',
+          url: 'https://www.instagram.com/prob.cryptocommunity?igsh=aTdrdjMyaGZkd2U2',
           icon: 'fab fa-instagram',
           iconBg: 'linear-gradient(135deg, #E4405F, #833AB4, #F77737)'
-        },
-        {
-          title: 'YouTube Channel',
-          description: 'Subscribe for exclusive content',
-          url: 'https://youtube.com/channel',
-          icon: 'fab fa-youtube',
-          iconBg: 'linear-gradient(135deg, #FF0000, #CC0000)'
-        },
-        {
-          title: 'Discord Server',
-          description: 'Chat with the community',
-          url: 'https://discord.gg/your-server',
-          icon: 'fab fa-discord',
-          iconBg: 'linear-gradient(135deg, #7289DA, #5865F2)'
-        },
-        {
-          title: 'Website Portfolio',
-          description: 'View my latest projects',
-          url: 'https://your-website.com',
-          icon: 'fas fa-globe',
-          iconBg: 'linear-gradient(135deg, #FFD700, #FFA500)'
         }
       ],
 
