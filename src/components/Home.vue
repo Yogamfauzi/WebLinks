@@ -23,7 +23,7 @@
       <!-- Profile Section -->
       <div class="text-center mb-12">
         <!-- Profile Image with Luxury Border -->
-        <div class="profile-container mb-8" @mouseenter="startProfileAnimation" @mouseleave="stopProfileAnimation">
+        <div class="profile-container mb-12" @mouseenter="startProfileAnimation" @mouseleave="stopProfileAnimation">
           <div class="profile-ring" :class="{ 'animate-spin-slow': isProfileAnimated }">
             <div class="profile-inner">
               <img 
@@ -39,7 +39,7 @@
         </div>
 
         <!-- Name and Bio -->
-        <h1 class="luxury-title text-5xl md:text-6xl font-bold mb-4 animate-fade-in">
+        <h1 class="luxury-title text-5xl md:text-6xl font-bold mt-4 mb-4 animate-fade-in">
           Probolinggo Crypto Community
         </h1>
         <p class="text-gold-light text-lg md:text-xl mb-2 opacity-90 animate-fade-in-delay">
@@ -121,17 +121,14 @@
 </template>
 
 <script>
-import profileImage from '../images/logopcc.jpg'; // pastikan path ini benar
+import profileImage from '../images/logopcc.jpg'; // pastikan path sesuai struktur folder Anda
 
 export default {
   name: 'LuxuryLinktree',
   data() {
     return {
-      name: 'Your Name',
-      bio: '🚀 Digital Creator & Entrepreneur',
-      description: 'Connecting you to all my digital spaces',
       footerText: 'Thank you for visiting',
-      profileImage, // sudah pakai import, bukan require
+      profileImage,
       isProfileAnimated: false,
       currentYear: new Date().getFullYear(),
 
@@ -208,7 +205,7 @@ export default {
       window.open(url, '_blank');
     },
     playHoverSound() {
-      // Optional
+      // Optional sound
     },
     handleImageError() {
       this.profileImage = 'https://via.placeholder.com/400x400/FFD700/000000?text=Profile';
@@ -282,6 +279,8 @@ export default {
   -webkit-text-fill-color: transparent;
   background-clip: text;
   text-shadow: 0 0 30px rgba(255, 215, 0, 0.5);
+  line-height: 1.2;
+  padding-bottom: 0.2em;
 }
 
 .link-card {
